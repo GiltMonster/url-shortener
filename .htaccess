@@ -1,0 +1,7 @@
+&lt;Files .env>
+    Order allow,deny
+    Deny from all
+
+    SetEnv ENV dev
+    SetEnv BASE /ssl/
+&lt;/Files>
