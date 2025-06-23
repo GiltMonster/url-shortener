@@ -31,9 +31,8 @@ class EncurtadorController
             $id = $encurtadorModel->encurtarUrl($url);
 
             http_response_code(201);
-            
-            return json_encode(['success' => true, 'id' => $id, 'message' => 'URL shortened successfully.']);
 
+            return json_encode(['success' => true, 'id' => $id, 'message' => 'URL shortened successfully.']);
         } catch (Exception $e) {
             http_response_code(400);
 
@@ -41,14 +40,23 @@ class EncurtadorController
         }
     }
 
+    public function listarUrls()
+    {
+        try {
+            $encurtadorModel = new EncurtadorModel($this->db);
+            $urls = $encurtadorModel->listarUrls();
+
+            http_response_code(200);
+            return json_encode(['success' => true, 'urls' => $urls]);
+        } catch (Exception $e) {
+            http_response_code(400);
+            return json_encode(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+
     public function obterUrlEncurtada($id)
     {
         // Implementar lógica para obter URL encurtada
-    }
-
-    public function listarUrls()
-    {
-        // Implementar lógica para listar URLs
     }
 
     public function deletarUrl($id)

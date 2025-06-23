@@ -49,6 +49,17 @@ class EncurtadorModel
         }
     }
     
+    public function listarUrls()
+    {
+
+        $stmt = $this->conn->prepare("SELECT id, original_url, shortened_url FROM urls");
+
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            throw new Exception("Error listing URLs: " . implode(", ", $stmt->errorInfo()));
+        }
+    }
 
     public function obterUrlEncurtada($id)
     {
@@ -63,17 +74,6 @@ class EncurtadorModel
         }
     }
 
-    public function listarUrls()
-    {
-        // Corrigido: o nome da coluna deve ser 'shortened_url'
-        $stmt = $this->conn->prepare("SELECT id, shortened_url FROM urls");
-
-        if ($stmt->execute()) {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            throw new Exception("Error listing URLs: " . implode(", ", $stmt->errorInfo()));
-        }
-    }
 
     public function deletarUrl($id)
     {
